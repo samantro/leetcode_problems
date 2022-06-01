@@ -1,0 +1,81 @@
+time=O(n2)
+space=O(1)
+
+
+class Solution {
+public:
+    int trap(vector<int>& h)
+    {
+        if(h.size()<=2) return 0;
+        int ans=0,lm,rm;
+        for(int i=1;i<h.size()-1;i++){
+            lm=h[i-1];
+            rm=h[i+1];
+            for(int j=0;j<i-1;j++) lm=max(lm,h[j]);
+            for(int j=i+2;j<h.size();j++) rm=max(rm,h[j]);
+            if(min(lm,rm)-h[i]>0) ans+=(min(lm,rm)-h[i]);
+        }
+        return ans;
+    }
+};
+
+
+//////////////////////////////////////////////////////////////////
+
+
+time=O(n)
+space=O(n)
+
+
+class Solution {
+public:
+    int trap(vector<int>& h)
+    {
+        if(h.size()<=2 | is_sorted(h.begin(),h.end())) return 0;
+        int ans=0,ch=0;
+        vector<int> rm(h.size()),lm(h.size());
+        for(int i=0;i<h.size();i++){
+            lm[i]=ch;
+            ch=max(ch,h[i]);
+        }
+        ch=0;
+        for(int i=h.size()-1;i>=0;i--){
+            rm[i]=ch;
+            ch=max(ch,h[i]);
+        }
+        for(int i=1;i<h.size()-1;i++){
+
+            if(min(lm[i],rm[i])-h[i]>0) ans+=(min(lm[i],rm[i])-h[i]);
+        }
+        return ans;
+    }
+};
+
+
+//////////////////////////////////////////////////////////////////////
+
+
+time=O(n)
+space=O(1)
+
+class Solution {
+public:
+    int trap(vector<int>& h)
+    {
+        if(h.size()<=2 ) return 0;
+        int ans=0,lm=h[0],rm=h[h.size()-1],l=1,r=h.size()-2;
+        while(l<=r){
+            if(lm<rm){
+                if(h[l]>=lm) lm=h[l];
+                else ans+=lm-h[l];
+                l++;
+            }else{
+                if(h[r]>=rm) rm=h[r];
+                else ans+=rm-h[r];
+                r--;
+            }
+        }
+        return ans;
+    }
+};
+
