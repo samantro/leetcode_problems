@@ -1,17 +1,20 @@
 class Solution {
 public:
-    int findJudge(int N, vector<vector<int>>& trust) {
-        if(N==1)
-            return N;
-        vector<pair<int,int>> arr(N+1,{0,0});
-        for(int i=0;i<trust.size();i++)
-        {
-            arr[trust[i][0]].first+=1;
-            arr[trust[i][1]].second+=1;
+    int findJudge(int n, vector<vector<int>>& t) {
+        if(n==1) return 1;
+        if(t.size()==0) return -1;
+        set<int> s;
+        map<int,set<int>> m;
+        for(int i=0;i<t.size();i++){
+            s.insert(t[i][0]);
+            m[t[i][0]].insert(t[i][1]);
         }
-        for(int i=0;i<=N;i++)
-            if(arr[i].first==0 && arr[i].second==N-1)
-                return i;
-        return -1;
+        if(s.size()==n) return -1;
+        int k=accumulate(s.begin(),s.end(),0);
+        k=n*(n+1)/2 - k;
+        for(auto i=m.begin();i!=m.end();i++){
+            if(i->second.find(k)==i->second.end()) return -1;
+        }
+        return k;
     }
 };
