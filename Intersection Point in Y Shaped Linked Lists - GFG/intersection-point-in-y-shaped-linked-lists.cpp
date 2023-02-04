@@ -51,20 +51,20 @@ struct Node {
 class Solution
 {
 public:
-    stack<Node*> q1,q2;
+    stack<Node*> s1,s2;
     void fun(Node* head1, Node* head2){
         if(!head1 && !head2) return;
         else if(!head1 && head2!=NULL){
-            q2.push(head2);
+            s2.push(head2);
             fun(head1,head2->next);
         }
         else if(!head2 && head1!=NULL){
-            q1.push(head1);
+            s1.push(head1);
             fun(head1->next,head2);
         } 
         else if(head1!=NULL && head2!=NULL){
-            q1.push(head1);
-            q2.push(head2);
+            s1.push(head1);
+            s2.push(head2);
             fun(head1->next,head2->next);
         } 
     }
@@ -73,10 +73,10 @@ public:
         // Your Code Here
         fun(head1,head2);
         int res;
-        while(q1.top()==q2.top()){
-            res=q1.top()->data;
-            q1.pop();
-            q2.pop();
+        while(s1.top()==s2.top()){
+            res=s1.top()->data;
+            s1.pop();
+            s2.pop();
         }
         return res;
         
