@@ -22,7 +22,7 @@ public:
             for(int j=0;j<m;j++){
                 if(grid[i][j] == 1 || grid[i][j] == 2) continue;
                 if(dfs(grid,i,j)){
-                    cout<<i<<" "<<j<<endl;
+                    // cout<<i<<" "<<j<<endl;
                     ans++;
                 }
             }
