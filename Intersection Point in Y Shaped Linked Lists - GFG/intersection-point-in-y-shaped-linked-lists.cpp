@@ -51,34 +51,26 @@ struct Node {
 class Solution
 {
 public:
-    stack<Node*> s1,s2;
-    void fun(Node* head1, Node* head2){
-        if(!head1 && !head2) return;
-        else if(!head1 && head2!=NULL){
-            s2.push(head2);
-            fun(head1,head2->next);
-        }
-        else if(!head2 && head1!=NULL){
-            s1.push(head1);
-            fun(head1->next,head2);
-        } 
-        else if(head1!=NULL && head2!=NULL){
-            s1.push(head1);
-            s2.push(head2);
-            fun(head1->next,head2->next);
-        } 
+    int len(Node* head){
+        return !head?0:1+len(head->next);
     }
     int intersectPoint(Node* head1, Node* head2)
     {
         // Your Code Here
-        fun(head1,head2);
-        int res;
-        while(s1.top()==s2.top()){
-            res=s1.top()->data;
-            s1.pop();
-            s2.pop();
+        int s1=len(head1),s2=len(head2);
+        if(s2>s1){
+            swap(head1,head2);
+            swap(s1,s2);
         }
-        return res;
+        while(s1!=s2){
+            s1--;
+            head1=head1->next;
+        }
+        while(head1->next!=head2->next){
+            head1=head1->next;
+            head2=head2->next;
+        }
+        return head1->next->data;
         
     }
 };
