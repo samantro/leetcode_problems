@@ -3,7 +3,7 @@ class Solution {
 public:
     long long distinctNames(vector<string>& id) {
         int n=id.size();
-        vector<set<string>> v(26);
+        vector<unordered_set<string>> v(26);
         long long res=0;
         for(int i=0;i<n;i++) v[id[i][0]-'a'].insert(id[i].substr(1));
         for(auto i=0;i<25;i++){
