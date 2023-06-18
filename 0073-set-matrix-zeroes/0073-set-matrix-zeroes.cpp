@@ -1,25 +1,29 @@
 class Solution {
 public:
     void setZeroes(vector<vector<int>>& mat) {
-        int n = mat.size(), m = mat[0].size();
-        vector<int> c(m,0),r(n,0);
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
+        int c=1;
+        for(int i=0;i<mat.size();i++){
+            for(int j=0;j<mat[0].size();j++){
                 if(!mat[i][j]){
-                    r[i]=1;
-                    c[j]=1;
+                    mat[i][0]=0;
+                    if(j) mat[0][j]=0;
+                    else c=0;
                 }
             }
         }
-        for(int i=0;i<n;i++){
-            if(r[i]){
-                for(int j=0;j<m;j++) mat[i][j] = 0;
+        for(int i=1;i<mat.size();i++){
+            for(int j=1;j<mat[0].size();j++){
+                if(mat[i][j]){
+                    if(!mat[i][0] || !mat[0][j]) mat[i][j]=0;
+                }
             }
         }
-        for(int i=0;i<m;i++){
-            if(c[i]){
-                for(int j=0;j<n;j++) mat[j][i] = 0;
-            }
+        if(!mat[0][0]){
+            for(int i=0;i<mat[0].size();i++) mat[0][i]=0;
         }
+        if(!c){
+            for(int i=0;i<mat.size();i++) mat[i][0]=0;
+        }
+        
     }
 };
