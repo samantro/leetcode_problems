@@ -4,7 +4,16 @@ public:
     Skiplist() {
         
     }
-    
+    int Search(int n){
+        int i=0,j=v.size()-1;
+        while(i<=j){
+            int m = (j+i)/2;
+            if(v[m]==n) return m;
+            if(v[m]>n) j=m-1;
+            else i=m+1;
+        }
+        return -1;
+    }
     bool search(int target) {
         return binary_search(begin(v),end(v),target);
     }
@@ -16,10 +25,10 @@ public:
     }
     
     bool erase(int num) {
-        if(!binary_search(begin(v),end(v),num)) return false;
+        int i = Search(num);
+        if(i==-1) return false;
         else {
-            auto it = find(begin(v),end(v),num);
-            v.erase(it);
+            v.erase(begin(v) + i);
             return true;
         };
     }
